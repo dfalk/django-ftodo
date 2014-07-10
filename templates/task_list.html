@@ -6,14 +6,16 @@
 
 {% block content %}
 <h1>Tasks</h1>
-<ul>
-    {% for object in object_list %}
-    <li><a {% if object.completed %}style='text-decoration:line-through'{% endif %}href="{% url "task_detail" object.id %}">{{ object.title }}</a>
-    (<a href="{% url "task_edit" object.id %}">edit</a>
-    <a href="{% url "task_delete" object.id %}">delete</a>)
-    </li>
+
+    {% regroup object_list by date_due|date:"Y-m-d" as objects_by_day %}
+    {% for day in objects_by_day %}
+        <p><b>{{ day.grouper }}</b></p>
+        <ul>
+        {% for item in day.list %}
+        <li>{% if item.completed %}+ {% endif %}<a href="{% url "task_detail" item.id %}">{{ item.title }}</a></li>
+        {% endfor %}
+        </ul>
     {% endfor %}
-</ul>
 
 <p><a href="{% url "task_new" %}">new</a></p>
 <p><a href="{% url "tasktag_list" %}">tags</a></p>

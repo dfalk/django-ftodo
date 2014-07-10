@@ -28,7 +28,7 @@ def task_index(request, template_name='task_index.html'):
         
 @login_required
 def task_list(request, template_name='task_list.html'):
-    tasks = Task.objects.filter(user=request.user)
+    tasks = Task.objects.filter(user=request.user).exclude(date_due__isnull=True)
     return render(request, template_name, {'object_list':tasks})
 
 @login_required
