@@ -93,9 +93,10 @@ def tasktag_detail(request, pk, template_name='tasktag_detail.html'):
     tasktag_result = get_object_or_404(TaskTag, pk=pk)
     if tasktag_result.user == request.user:
         tasktag = tasktag_result
+        task_list = Task.objects.filter(user=request.user).filter(tags__in=[tasktag])
     else:
         return HttpResponseNotFound('<h1>Page not found</h1>')
-    return render(request, template_name, {'object':tasktag})
+    return render(request, template_name, {'object':tasktag, 'object_list':task_list})
 
 @login_required
 def tasktag_create(request, template_name='tasktag_form.html'):
