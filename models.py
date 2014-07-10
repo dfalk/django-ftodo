@@ -1,8 +1,10 @@
 from django.db import models
 from django.core.urlresolvers import reverse
+from django.contrib.auth.models import User
 
 
 class TaskTag(models.Model):
+    user = models.ForeignKey(User)
     title = models.CharField(max_length=200)
     category = models.CharField(max_length=200)
     
@@ -17,6 +19,7 @@ class TaskTag(models.Model):
 
 
 class Task(models.Model):
+    user = models.ForeignKey(User)
     title = models.CharField(max_length=200)
     content = models.TextField(blank=True)
     date_created = models.DateTimeField(auto_now_add=True)
