@@ -1,0 +1,13 @@
+{% extends 'task_base.html' %}
+
+{% block breadcrumb %}
+<a href="/">Главная</a> - <a href="{% url 'task_list' %}">Список</a>{% if object %} - <a href="{% url 'task_detail' object.id %}">{{ object.title }}</a>{% endif %} - Редактирование
+{% endblock %}
+
+{% block content %}
+<h1>{% if object %}Edit task{% else %}New task{% endif %}</h1>
+<form method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Submit" />
+</form>
+{% endblock %}

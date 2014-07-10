@@ -1,0 +1,13 @@
+{% extends 'task_base.html' %}
+
+{% block breadcrumb %}
+Главная
+{% endblock %}
+
+{% block content %}
+<h1>Tasks</h1>
+
+<p>Welcome{% if user.is_authenticated %}, {{user.username}}!{% else %}! Please, <a href="/accounts/login/">login</a>!{% endif %}</p>
+<p>Browse <a href="{% url 'task_list' %}">tasks</a> or <a href="{% url 'tasktag_list' %}">tags</a>.</p>
+
+{% endblock %}

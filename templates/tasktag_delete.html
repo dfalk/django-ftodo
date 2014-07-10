@@ -1,0 +1,13 @@
+{% extends 'tasktag_base.html' %}
+
+{% block breadcrumb %}
+<a href="/">Главная</a> - <a href="{% url 'tasktag_list' %}">Список</a> - Объект
+{% endblock %}
+
+{% block content %}
+<h1>Delete tag</h1>
+<form method="post">{% csrf_token %}
+    Are you sure you want to delete "{{ object.title }}" ?
+    <input type="submit" value="Submit" />
+</form>
+{% endblock %}

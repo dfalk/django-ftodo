@@ -1,0 +1,19 @@
+{% extends 'tasktag_base.html' %}
+
+{% block breadcrumb %}
+<a href="/">Главная</a> - <a href="{% url 'tasktag_list' %}">Теги</a> - Объект
+{% endblock %}
+
+{% block content %}
+<h1>{{ object.title }}</h1>
+
+<p>
+    <a href="{% url "tasktag_edit" object.id %}">edit</a>
+    <a href="{% url "tasktag_delete" object.id %}">delete</a>
+</p>
+
+<p>{{ object.content }}</p>
+
+<p><br><br>- <a href="{% url "tasktag_list" %}">back to list</a></p>
+
+{% endblock %}
