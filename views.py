@@ -29,7 +29,6 @@ def task_index(request, template_name='task_index.html'):
     tasktags = []
     if request.user.is_authenticated():
         tasks = Task.objects.filter(user=request.user).exclude(date_due__isnull=True).filter(date_due__gte=date.today())
-        print datetime.now()
         tasktags = TaskTag.objects.filter(user=request.user)
     return render(request, template_name, {'object_list':tasks, 'tag_list':tasktags})
         
