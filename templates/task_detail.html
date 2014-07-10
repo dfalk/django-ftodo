@@ -1,7 +1,7 @@
 {% extends 'task_base.html' %}
 
 {% block breadcrumb %}
-<a href="/">Главная</a> - <a href="{% url 'task_list' %}">Список</a> - Объект
+<a href="/">Главная</a> - <a href="{% url 'task_list' %}">Задачи</a> - Объект
 {% endblock %}
 
 {% block content %}
@@ -12,8 +12,9 @@
     <a href="{% url "task_delete" object.id %}">delete</a>
 </p>
 
-<p>{{ object.content }}</p>
+<p>[{% for item in object.tags.all %}<a href="{% url 'tasktag_detail' item.id %}">{{ item.title }}</a> {% endfor %}]</p>
 <p>Срок: {{ object.date_due }}</p>
+<p>{{ object.content }}</p>
 
 <p><br><br>- <a href="{% url "task_list" %}">back to list</a></p>
 

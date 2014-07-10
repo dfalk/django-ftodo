@@ -1,11 +1,11 @@
 {% extends 'tasktag_base.html' %}
 
 {% block breadcrumb %}
-<a href="/">Главная</a> - <a href="{% url "task_list" %}">Задачи</a> - Теги
+<a href="/">Главная</a> - Теги
 {% endblock %}
 
 {% block content %}
-<h1>Tags</h1>
+<h1>Теги</h1>
 <ul>
     {% for object in object_list %}
     <li>({{ object.category }}) <a href="{% url "tasktag_detail" object.id %}">{{ object.title }}</a>

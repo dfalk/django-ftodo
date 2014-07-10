@@ -1,21 +1,17 @@
 {% extends 'task_base.html' %}
 
 {% block breadcrumb %}
-<a href="/">Главная</a> - Список
+<a href="/">Главная</a> - Задачи
 {% endblock %}
 
 {% block content %}
-<h1>Tasks</h1>
-
-    {% regroup object_list by date_due|date:"Y-m-d" as objects_by_day %}
-    {% for day in objects_by_day %}
-        <p><b>{{ day.grouper }}</b></p>
-        <ul>
-        {% for item in day.list %}
-        <li>{% if item.completed %}+ {% endif %}<a href="{% url "task_detail" item.id %}">{{ item.title }}</a></li>
-        {% endfor %}
-        </ul>
+<h1>Задачи</h1>
+<ul>
+    {% for item in object_list %}
+    <li>{{ item.date_due|date:"Y-m-d" }} {% if item.completed %}+ {% endif %}<a href="{% url "task_detail" item.id %}">{{ item.title }}</a> (<a href="{% url "task_edit" item.id %}">edit</a>
+    <a href="{% url "task_delete" item.id %}">delete</a>)</li>
     {% endfor %}
+</ul>
 
 <p><a href="{% url "task_new" %}">new</a></p>
 <p><a href="{% url "tasktag_list" %}">tags</a></p>

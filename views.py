@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseNotFound
 from django.forms import ModelForm
 from django.contrib.auth.decorators import login_required
+from datetime import datetime, date
 
 from .models import Task, TaskTag
 
@@ -24,11 +25,17 @@ class TaskTagForm(ModelForm):
         exclude = ['user']
 
 def task_index(request, template_name='task_index.html'):
-    return render(request, template_name)
+    tasks = []
+    tasktags = []
+    if request.user.is_authenticated():
+        tasks = Task.objects.filter(user=request.user).exclude(date_due__isnull=True).filter(date_due__gte=date.today())
+        print datetime.now()
+        tasktags = TaskTag.objects.filter(user=request.user)
+    return render(request, template_name, {'object_list':tasks, 'tag_list':tasktags})
         
 @login_required
 def task_list(request, template_name='task_list.html'):
-    tasks = Task.objects.filter(user=request.user).exclude(date_due__isnull=True)
+    tasks = Task.objects.filter(user=request.user)
     return render(request, template_name, {'object_list':tasks})
 
 @login_required
