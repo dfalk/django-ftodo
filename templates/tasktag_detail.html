@@ -12,11 +12,13 @@
     <a href="{% url "tasktag_delete" object.id %}">delete</a>
 </p>
 
+<p><a href="{% url "task_new" %}?next={{ request.path }}&tag={{ object.id }}">new</a></p>
+
 <ul>
     {% for object in object_list %}
     <li>{% if object.completed %}+ {% endif %}<a href="{% url "task_detail" object.id %}">{{ object.title }}</a>
-    (<a href="{% url "task_edit" object.id %}">edit</a>
-    <a href="{% url "task_delete" object.id %}">delete</a>)
+    (<a href="{% url "task_edit" object.id %}?next={{ request.path }}">edit</a>
+    <a href="{% url "task_delete" object.id %}?next={{ request.path }}">delete</a>)
     </li>
     {% endfor %}
 </ul>

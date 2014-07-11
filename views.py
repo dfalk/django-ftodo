@@ -57,6 +57,8 @@ def task_create(request, template_name='task_form.html'):
         task.user = request.user
         task.save()
         form.save_m2m()
+        if 'next' in request.GET:
+            return redirect(request.GET['next'])
         return redirect('task_index')
     return render(request, template_name, {'form':form})
 
@@ -71,6 +73,8 @@ def task_update(request, pk, template_name='task_form.html'):
     form = TaskForm(request.POST or None, instance=task, user=request.user)
     if form.is_valid():
         form.save()
+        if 'next' in request.GET:
+            return redirect(request.GET['next'])
         return redirect('task_index')
     return render(request, template_name, {'object':task, 'form':form})
 
@@ -84,6 +88,8 @@ def task_delete(request, pk, template_name='task_delete.html'):
         return HttpResponseNotFound('<h1>Page not found</h1>')
     if request.method=='POST':
         task.delete()
+        if 'next' in request.GET:
+            return redirect(request.GET['next'])
         return redirect('task_index')
     return render(request, template_name, {'object':task})
 
