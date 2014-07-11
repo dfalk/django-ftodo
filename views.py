@@ -24,7 +24,7 @@ class TaskTagForm(ModelForm):
         model = TaskTag
         exclude = ['user']
 
-def task_index(request, template_name='task_index.html'):
+def task_index(request, template_name='ftodo/task_index.html'):
     tasks = []
     tasktags = []
     if request.user.is_authenticated():
@@ -33,12 +33,12 @@ def task_index(request, template_name='task_index.html'):
     return render(request, template_name, {'object_list':tasks, 'tag_list':tasktags})
         
 @login_required
-def task_list(request, template_name='task_list.html'):
+def task_list(request, template_name='ftodo/task_list.html'):
     tasks = Task.objects.filter(user=request.user)
     return render(request, template_name, {'object_list':tasks})
 
 @login_required
-def task_detail(request, pk, template_name='task_detail.html'):
+def task_detail(request, pk, template_name='ftodo/task_detail.html'):
     task = None
     task_result = get_object_or_404(Task, pk=pk)
     if task_result.user == request.user:
@@ -50,7 +50,7 @@ def task_detail(request, pk, template_name='task_detail.html'):
     return render(request, template_name, {'object':task})
 
 @login_required
-def task_create(request, template_name='task_form.html'):
+def task_create(request, template_name='ftodo/task_form.html'):
     form = TaskForm(request.POST or None, user=request.user)
     if form.is_valid():
         task = form.save(commit=False)
@@ -63,7 +63,7 @@ def task_create(request, template_name='task_form.html'):
     return render(request, template_name, {'form':form})
 
 @login_required
-def task_update(request, pk, template_name='task_form.html'):
+def task_update(request, pk, template_name='ftodo/task_form.html'):
     task = None
     task_result = get_object_or_404(Task, pk=pk)
     if task_result.user == request.user:
@@ -79,7 +79,7 @@ def task_update(request, pk, template_name='task_form.html'):
     return render(request, template_name, {'object':task, 'form':form})
 
 @login_required
-def task_delete(request, pk, template_name='task_delete.html'):
+def task_delete(request, pk, template_name='ftodo/task_delete.html'):
     task = None
     task_result = get_object_or_404(Task, pk=pk)
     if task_result.user == request.user:
@@ -95,12 +95,12 @@ def task_delete(request, pk, template_name='task_delete.html'):
 
 
 @login_required
-def tasktag_list(request, template_name='tasktag_list.html'):
+def tasktag_list(request, template_name='ftodo/tasktag_list.html'):
     tasktags = TaskTag.objects.filter(user=request.user)
     return render(request, template_name, {'object_list':tasktags})
 
 @login_required
-def tasktag_detail(request, pk, template_name='tasktag_detail.html'):
+def tasktag_detail(request, pk, template_name='ftodo/tasktag_detail.html'):
     tasktag = None
     tasktag_result = get_object_or_404(TaskTag, pk=pk)
     if tasktag_result.user == request.user:
@@ -111,7 +111,7 @@ def tasktag_detail(request, pk, template_name='tasktag_detail.html'):
     return render(request, template_name, {'object':tasktag, 'object_list':task_list})
 
 @login_required
-def tasktag_create(request, template_name='tasktag_form.html'):
+def tasktag_create(request, template_name='ftodo/tasktag_form.html'):
     form = TaskTagForm(request.POST or None)
     if form.is_valid():
         tasktag = form.save(commit=False)
@@ -121,7 +121,7 @@ def tasktag_create(request, template_name='tasktag_form.html'):
     return render(request, template_name, {'form':form})
 
 @login_required
-def tasktag_update(request, pk, template_name='tasktag_form.html'):
+def tasktag_update(request, pk, template_name='ftodo/tasktag_form.html'):
     tasktag = None
     tasktag_result = get_object_or_404(TaskTag, pk=pk)
     if tasktag_result.user == request.user:
@@ -135,7 +135,7 @@ def tasktag_update(request, pk, template_name='tasktag_form.html'):
     return render(request, template_name, {'object':tasktag, 'form':form})
 
 @login_required
-def tasktag_delete(request, pk, template_name='tasktag_delete.html'):
+def tasktag_delete(request, pk, template_name='ftodo/tasktag_delete.html'):
     tasktag = None
     tasktag_result = get_object_or_404(TaskTag, pk=pk)
     if tasktag_result.user == request.user:

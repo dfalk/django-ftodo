@@ -1,4 +1,4 @@
-{% extends 'task_base.html' %}
+{% extends 'ftodo/task_base.html' %}
 
 {% block breadcrumb %}
 <a href="/">Главная</a> - <a href="{% url 'task_list' %}">Задачи</a>{% if object %} - <a href="{% url 'task_detail' object.id %}">{{ object.title }}</a>{% endif %} - Редактирование
