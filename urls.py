@@ -3,7 +3,8 @@ from django.conf.urls import patterns, url
 from . import views
 
 urlpatterns = patterns('',
-    url(r'^tasks$', views.task_list, name='task_list'),
+    url(r'^$', views.task_index, name='task_index'),
+    url(r'^tasks/$', views.task_list, name='task_list'),
     url(r'^tasks/(?P<pk>\d+)$', views.task_detail, name='task_detail'),
     url(r'^tasks/new$', views.task_create, name='task_new'),
     url(r'^tasks/edit/(?P<pk>\d+)$', views.task_update, name='task_edit'),
