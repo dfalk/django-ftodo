@@ -51,7 +51,13 @@ def task_detail(request, pk, template_name='ftodo/task_detail.html'):
 
 @login_required
 def task_create(request, template_name='ftodo/task_form.html'):
-    form = TaskForm(request.POST or None, user=request.user)
+    if 'tag' in request.GET:
+        tasktag_id = request.GET['tag']
+    form = TaskForm(
+        request.POST or None,
+        user=request.user,
+        initial={'tags': [tasktag_id]}
+    )
     if form.is_valid():
         task = form.save(commit=False)
         task.user = request.user
