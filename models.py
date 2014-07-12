@@ -26,12 +26,13 @@ class Task(models.Model):
     date_modified = models.DateTimeField(auto_now=True)
     date_start = models.DateTimeField(blank=True, null=True)
     date_due = models.DateTimeField(blank=True, null=True)
+    has_due = models.BooleanField(default=False)
     completed = models.BooleanField(default=False)
     tags = models.ManyToManyField(TaskTag, blank=True, null=True)
     parent = models.ForeignKey('self', blank=True, null=True)
 
     class Meta:
-        ordering = ['date_due']
+        ordering = ['-has_due', 'date_due']
     
     def __unicode__(self):
         return self.title

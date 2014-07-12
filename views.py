@@ -62,6 +62,7 @@ def task_create(request, template_name='ftodo/task_form.html'):
     if form.is_valid():
         task = form.save(commit=False)
         task.user = request.user
+        if task.date_due: task.has_due = True
         task.save()
         form.save_m2m()
         if 'next' in request.GET:
@@ -79,7 +80,13 @@ def task_update(request, pk, template_name='ftodo/task_form.html'):
         return HttpResponseNotFound('<h1>Page not found</h1>')
     form = TaskForm(request.POST or None, instance=task, user=request.user)
     if form.is_valid():
-        form.save()
+        task = form.save(commit=False)
+        if task.date_due:
+            task.has_due = True
+        else:
+            task.has_due = False
+        task.save()
+        form.save_m2m()
         if 'next' in request.GET:
             return redirect(request.GET['next'])
         return redirect('task_index')
