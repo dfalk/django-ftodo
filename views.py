@@ -17,7 +17,7 @@ class TaskForm(ModelForm):
 
     class Meta:
         model = Task
-        exclude = ['user','parent']
+        exclude = ['user','has_due','parent']
         
 class TaskTagForm(ModelForm):
     class Meta:
