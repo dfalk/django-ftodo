@@ -51,6 +51,7 @@ def task_detail(request, pk, template_name='ftodo/task_detail.html'):
 
 @login_required
 def task_create(request, template_name='ftodo/task_form.html'):
+    tasktag_id = None
     if 'tag' in request.GET:
         tasktag_id = request.GET['tag']
     form = TaskForm(
