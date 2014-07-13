@@ -52,6 +52,7 @@ def task_detail(request, pk, template_name='ftodo/task_detail.html'):
 def task_create(request, template_name='ftodo/task_form.html'):
     tasktag_id = None
     task_id = None
+    task_parent = None
     if 'tag' in request.GET:
         tasktag_id = request.GET['tag']
     if 'task' in request.GET:
@@ -70,7 +71,7 @@ def task_create(request, template_name='ftodo/task_form.html'):
     if form.is_valid():
         task = form.save(commit=False)
         task.user = request.user
-        task.parent = task_parent
+        if task_parent: task.parent = task_parent
         if task.date_due: task.has_due = True
         task.save()
         form.save_m2m()
