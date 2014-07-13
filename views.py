@@ -17,7 +17,7 @@ class TaskForm(ModelForm):
 
     class Meta:
         model = Task
-        exclude = ['user','has_due','parent']
+        exclude = ['user','has_due']
         
 class TaskTagForm(ModelForm):
     class Meta:
@@ -43,25 +43,34 @@ def task_detail(request, pk, template_name='ftodo/task_detail.html'):
     task_result = get_object_or_404(Task, pk=pk)
     if task_result.user == request.user:
         task = task_result
+        subtasks = Task.objects.filter(parent=task)
     else:
         return HttpResponseNotFound('<h1>Page not found</h1>')
-    if task_result.user == request.user:
-         task = task_result
-    return render(request, template_name, {'object':task})
+    return render(request, template_name, {'object':task, 'subtasks':subtasks})
 
 @login_required
 def task_create(request, template_name='ftodo/task_form.html'):
     tasktag_id = None
+    task_id = None
     if 'tag' in request.GET:
         tasktag_id = request.GET['tag']
+    if 'task' in request.GET:
+        task_id = request.GET['task']
+        try:
+            task_parent = Task.objects.get(id=task_id)
+            if task_parent.user != request.user:
+                task_id = None
+        except Task.DoesNotExist:
+            task_id = None
     form = TaskForm(
         request.POST or None,
         user=request.user,
-        initial={'tags': [tasktag_id]}
+        initial={'tags': [tasktag_id], 'parent':task_id}
     )
     if form.is_valid():
         task = form.save(commit=False)
         task.user = request.user
+        task.parent = task_parent
         if task.date_due: task.has_due = True
         task.save()
         form.save_m2m()

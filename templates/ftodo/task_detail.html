@@ -13,8 +13,18 @@
 </p>
 
 <p>[{% for item in object.tags.all %}<a href="{% url 'tasktag_detail' item.id %}">{{ item.title }}</a> {% endfor %}]</p>
+
 <p>Срок: {{ object.date_due }}</p>
+{% if object.parent %}<p>Главная задача: <a href="{% url 'task_detail' object.parent_id %}">{{ object.parent }}</a>{% endif %}
 <p>{{ object.content }}</p>
+
+<p>Подзадачи:</p>
+<p><ul>{% for item in subtasks %}
+<li>{{ item.date_due|date:"Y-m-d" }} {% if item.completed %}+ {% endif %}<a href="{% url "task_detail" item.id %}">{{ item.title }}</a> (<a href="{% url "task_edit" item.id %}">edit</a>
+    <a href="{% url "task_delete" item.id %}">delete</a>)</li>
+{% endfor %}</ul></p>
+
+<p><a href="{% url "task_new" %}?task={{ object.id }}">new</a></p>
 
 <p><br><br>- <a href="{% url "task_list" %}">back to list</a></p>
 
