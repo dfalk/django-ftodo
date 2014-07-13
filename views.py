@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseNotFound
 from django.forms import ModelForm
 from django.contrib.auth.decorators import login_required
-from datetime import datetime, date
+from datetime import datetime, date, timedelta
 
 from .models import Task, TaskTag
 
@@ -95,6 +95,10 @@ def task_update(request, pk, template_name='ftodo/task_form.html'):
             task.has_due = True
         else:
             task.has_due = False
+        if task.completed and task.repeat:
+            task.date_due = datetime.now() + timedelta(days=1)
+            task.completed = False
+            task.content = task.content + "\nlog:" + str(datetime.now())
         task.save()
         form.save_m2m()
         if 'next' in request.GET:

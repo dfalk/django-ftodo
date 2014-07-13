@@ -28,6 +28,7 @@ class Task(models.Model):
     date_due = models.DateTimeField(blank=True, null=True)
     has_due = models.BooleanField(default=False)
     completed = models.BooleanField(default=False)
+    repeat = models.BooleanField(default=False)
     tags = models.ManyToManyField(TaskTag, blank=True, null=True)
     parent = models.ForeignKey('self', blank=True, null=True)
 
