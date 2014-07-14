@@ -11,6 +11,12 @@
 {% if user.is_authenticated %}
     <h2>Задачи</h2>
     <p><a href="{% url "task_new" %}">new</a></p>
+    <p><b>Просроченные</b></p>
+    <ul>{% for item in old_list %}
+        <li>{{ item.date_due|date:"Y-m-d" }} <a href="{% url "task_detail" item.id %}">{{ item.title }}</a>  (<a href="{% url "task_edit" item.id %}">edit</a>
+    <a href="{% url "task_delete" item.id %}">delete</a>)</li>
+        {% endfor %}
+    </ul>
     {% regroup object_list by date_due|date:"Y-m-d" as objects_by_day %}
     {% for day in objects_by_day %}
         <p><b>{{ day.grouper|naturalday:"Y-m-d" }}</b></p>
