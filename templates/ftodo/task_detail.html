@@ -16,7 +16,7 @@
 
 <p>Срок: {{ object.date_due }}</p>
 {% if object.parent %}<p>Главная задача: <a href="{% url 'task_detail' object.parent_id %}">{{ object.parent }}</a>{% endif %}
-<p>{{ object.content }}</p>
+<p>{{ object.content|linebreaks }}</p>
 
 <p>Подзадачи:</p>
 <p><ul>{% for item in subtasks %}
