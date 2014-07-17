@@ -29,6 +29,7 @@ class Task(models.Model):
     has_due = models.BooleanField(default=False)
     completed = models.BooleanField(default=False)
     repeat = models.BooleanField(default=False)
+    bookmark = models.BooleanField(default=False)
     tags = models.ManyToManyField(TaskTag, blank=True, null=True)
     parent = models.ForeignKey('self', blank=True, null=True)
 
