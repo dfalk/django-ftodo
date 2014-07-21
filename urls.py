@@ -14,4 +14,10 @@ urlpatterns = patterns('',
     url(r'^tags/new$', views.tasktag_create, name='tasktag_new'),
     url(r'^tags/edit/(?P<pk>\d+)$', views.tasktag_update, name='tasktag_edit'),
     url(r'^tags/delete/(?P<pk>\d+)$', views.tasktag_delete, name='tasktag_delete'),
+    url(r'^notes/$', views.note_list, name='note_list'),
+    url(r'^notes/(?P<pk>\d+)$', views.note_detail, name='note_detail'),
+    url(r'^notes/new$', views.note_create, name='note_new'),
+    url(r'^notes/edit/(?P<pk>\d+)$', views.note_update, name='note_edit'),
+    url(r'^notes/delete/(?P<pk>\d+)$', views.note_delete, name='note_delete'),
+
 )

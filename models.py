@@ -41,3 +41,20 @@ class Task(models.Model):
 
     def get_absolute_url(self):
         return reverse('task_detail', kwargs={'pk': self.pk})
+
+
+class Note(models.Model):
+    user = models.ForeignKey(User)
+    title = models.CharField(max_length=200)
+    content = models.TextField(blank=True)
+    date_created = models.DateTimeField(auto_now_add=True)
+    date_modified = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['-date_modified']
+    
+    def __unicode__(self):
+        return self.title
+
+    def get_absolute_url(self):
+        return reverse('note_detail', kwargs={'pk': self.pk})

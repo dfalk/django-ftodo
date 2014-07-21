@@ -4,7 +4,8 @@ from django.forms import ModelForm
 from django.contrib.auth.decorators import login_required
 from datetime import datetime, date, timedelta
 
-from .models import Task, TaskTag
+from .models import Task, TaskTag, Note
+
 
 class TaskForm(ModelForm):
 
@@ -18,11 +19,17 @@ class TaskForm(ModelForm):
     class Meta:
         model = Task
         exclude = ['user','has_due']
-        
+
 class TaskTagForm(ModelForm):
     class Meta:
         model = TaskTag
         exclude = ['user']
+
+class NoteForm(ModelForm):
+    class Meta:
+        model = Note
+        exclude = ['user']
+
 
 def task_index(request, template_name='ftodo/task_index.html'):
     tasks = []
@@ -180,3 +187,64 @@ def tasktag_delete(request, pk, template_name='ftodo/tasktag_delete.html'):
         tasktag.delete()
         return redirect('tasktag_list')
     return render(request, template_name, {'object':tasktag})
+
+
+@login_required
+def note_list(request, template_name='ftodo/note_list.html'):
+    notes = Note.objects.filter(user=request.user)
+    return render(request, template_name, {'object_list':notes})
+
+@login_required
+def note_detail(request, pk, template_name='ftodo/note_detail.html'):
+    note = None
+    note_result = get_object_or_404(Note, pk=pk)
+    if note_result.user == request.user:
+        note = note_result
+    else:
+        return HttpResponseNotFound('<h1>Page not found</h1>')
+    return render(request, template_name, {'object':note})
+
+@login_required
+def note_create(request, template_name='ftodo/note_form.html'):
+    note_id = None
+    form = NoteForm(request.POST or None)
+    if form.is_valid():
+        note = form.save(commit=False)
+        note.user = request.user
+        note.save()
+        if 'next' in request.GET:
+            return redirect(request.GET['next'])
+        return redirect('note_list')
+    return render(request, template_name, {'form':form})
+
+@login_required
+def note_update(request, pk, template_name='ftodo/note_form.html'):
+    note = None
+    note_result = get_object_or_404(Note, pk=pk)
+    if note_result.user == request.user:
+        note = note_result
+    else:
+        return HttpResponseNotFound('<h1>Page not found</h1>')
+    form = NoteForm(request.POST or None, instance=note)
+    if form.is_valid():
+        note = form.save(commit=False)
+        note.save()
+        if 'next' in request.GET:
+            return redirect(request.GET['next'])
+        return redirect('note_list')
+    return render(request, template_name, {'object':note, 'form':form})
+
+@login_required
+def note_delete(request, pk, template_name='ftodo/note_delete.html'):
+    note = None
+    note_result = get_object_or_404(Note, pk=pk)
+    if note_result.user == request.user:
+        note = note_result
+    else:
+        return HttpResponseNotFound('<h1>Page not found</h1>')
+    if request.method=='POST':
+        note.delete()
+        if 'next' in request.GET:
+            return redirect(request.GET['next'])
+        return redirect('note_list')
+    return render(request, template_name, {'object':note})
