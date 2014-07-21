@@ -8,7 +8,7 @@
 <h1>{{ object.title }}</h1>
 
 <p>
-    <a href="{% url "task_edit" object.id %}">edit</a>
+    <a href="{% url "task_edit" object.id %}?next={{ request.path }}">edit</a>
     <a href="{% url "task_delete" object.id %}">delete</a>
 </p>
 
@@ -20,7 +20,7 @@
 
 <p>Подзадачи:</p>
 <p><ul>{% for item in subtasks %}
-<li>{{ item.date_due|date:"Y-m-d" }} {% if item.completed %}+ {% endif %}<a href="{% url "task_detail" item.id %}">{{ item.title }}</a> (<a href="{% url "task_edit" item.id %}">edit</a>
+<li>{{ item.date_due|date:"Y-m-d" }} {% if item.completed %}+ {% endif %}<a href="{% url "task_detail" item.id %}?next={{ request.path }}">{{ item.title }}</a> (<a href="{% url "task_edit" item.id %}?next={{ request.path }}">edit</a>
     <a href="{% url "task_delete" item.id %}">delete</a>)</li>
 {% endfor %}</ul></p>
 
