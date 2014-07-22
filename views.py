@@ -33,6 +33,8 @@ class NoteForm(ModelForm):
 
 def task_index(request, template_name='ftodo/task_index.html'):
     tasks = []
+    old_tasks = []
+    bookmarks = []
     tasktags = []
     if request.user.is_authenticated():
         tasks = Task.objects.filter(user=request.user).exclude(date_due__isnull=True).filter(date_due__gte=date.today())
