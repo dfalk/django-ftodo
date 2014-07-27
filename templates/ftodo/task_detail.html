@@ -24,7 +24,7 @@
     <a href="{% url "task_delete" item.id %}?next={{ request.path }}">delete</a>)</li>
 {% endfor %}</ul></p>
 
-<p><a href="{% url "task_new" %}?task={{ object.id }}?next={{ request.path }}">new</a></p>
+<p><a href="{% url "task_new" %}?task={{ object.id }}&next={{ request.path }}">new</a></p>
 
 <p><br><br>- <a href="{% url "task_list" %}">back to list</a></p>
 
