@@ -1,3 +1,8 @@
 {% extends 'ftodo/todo_base.html' %}
+
+{% block breadcrumb %}
+{{ block.super }} <li><a href="{% url 'tasktag_list' %}">Теги</a></li>
+{% endblock %}
+
 {% block content %}
 {% endblock %}

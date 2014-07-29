@@ -1,19 +1,19 @@
 {% extends 'ftodo/note_base.html' %}
 
+{% block meta_title %}{{ object.title }}{% endblock %}
+
 {% block breadcrumb %}
-<a href="/">Главная</a> - <a href="{% url 'note_list' %}">Заметки</a> - Объект
+{{ block.super }} <li>{{ object.title }}</li>
 {% endblock %}
 
-{% block content %}
-<h1>{{ object.title }}</h1>
+{% block title %}{{ object.title }}{% endblock %}
 
+{% block content %}
 <p>
     <a href="{% url "note_edit" object.id %}">ред</a>
     <a href="{% url "note_delete" object.id %}">x</a>
 </p>
 
 <p>{{ object.content|linebreaks }}</p>
-
-<p><br><br>- <a href="{% url "note_list" %}">назад в список</a></p>
 
 {% endblock %}

@@ -1,11 +1,14 @@
 {% extends 'ftodo/task_base.html' %}
 
+{% block meta_title %}Удаление задачи{% endblock %}
+
 {% block breadcrumb %}
-<a href="/">Главная</a> - <a href="{% url 'task_list' %}">Задачи</a> - Объект
+{{ block.super }}<li><a href="{% url 'task_detail' object.id %}">{{ object.title }}</a></li> <li>Удаление</li> 
 {% endblock %}
 
+{% block title %}Delete task{% endblock %}
+
 {% block content %}
-<h1>Delete task</h1>
 <form method="post">{% csrf_token %}
     Are you sure you want to delete "{{ object.title }}" ?
     <input type="submit" value="Submit" />

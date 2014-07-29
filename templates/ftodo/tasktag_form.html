@@ -1,11 +1,18 @@
 {% extends 'ftodo/tasktag_base.html' %}
 
+{% block meta_title %}
+{% if object %}Edit tasktag{% else %}New tasktag{% endif %}
+{% endblock %}
+
 {% block breadcrumb %}
-<a href="/">Главная</a> - <a href="{% url 'tasktag_list' %}">Теги</a>{% if object %} - <a href="{% url 'tasktag_detail' object.id %}">{{ object.title }}</a>{% endif %} - Редактирование
+{{ block.super }}{% if object %}<li><a href="{% url 'tasktag_detail' object.id %}">{{ object.title }}</a></li> <li>Редактирование</li>{% else %}<li>Новый</li>{% endif %}
+{% endblock %}
+
+{% block title %}
+{% if object %}Edit tasktag{% else %}New tasktag{% endif %}
 {% endblock %}
 
 {% block content %}
-<h1>{% if object %}Edit tasktag{% else %}New tasktag{% endif %}</h1>
 <form method="post">{% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="Submit" />

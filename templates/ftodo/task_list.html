@@ -1,11 +1,14 @@
 {% extends 'ftodo/task_base.html' %}
 
+{% block meta_title %}Все задачи{% endblock %}
+
 {% block breadcrumb %}
-<a href="/">Главная</a> - Задачи
+{{ block.super }} <li>Все</li>
 {% endblock %}
 
+{% block title %}Задачи{% endblock %}
+
 {% block content %}
-<h1>Задачи</h1>
 <ul>
     {% for item in object_list %}
     <li>{{ item.date_due|date:"Y-m-d" }} {% if item.completed %}+ {% endif %}<a href="{% url "task_detail" item.id %}">{{ item.title }}</a> (<a href="{% url "task_edit" item.id %}">edit</a>

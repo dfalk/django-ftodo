@@ -1,12 +1,14 @@
 {% extends 'ftodo/tasktag_base.html' %}
 
+{% block meta_title %}Тег {{ object.title }}{% endblock %}
+
 {% block breadcrumb %}
-<a href="/">Главная</a> - <a href="{% url 'tasktag_list' %}">Теги</a> - Объект
+{{ block.super }}<li>{{ object.title }}</li>
 {% endblock %}
 
-{% block content %}
-<h1>{{ object.title }}</h1>
+{% block title %}{{ object.title }}{% endblock %}
 
+{% block content %}
 <p>
     <a href="{% url "tasktag_edit" object.id %}">edit</a>
     <a href="{% url "tasktag_delete" object.id %}">delete</a>
@@ -24,7 +26,4 @@
 </ul>
 
 <p>{{ object.content }}</p>
-
-<p><br><br>- <a href="{% url "tasktag_list" %}">back to list</a></p>
-
 {% endblock %}
