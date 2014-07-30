@@ -1,0 +1,20 @@
+{% extends 'ftodo/task_base.html' %}
+
+{% block meta_title %}Проекты{% endblock %}
+
+{% block breadcrumb %}
+{{ block.super }} <li>Проекты</li>
+{% endblock %}
+
+{% block title %}Проекты{% endblock %}
+
+{% block content %}
+<ul>
+    {% for item in object_list %}
+    <li>{{ item.date_due|date:"Y-m-d" }} {% if item.completed %}+ {% endif %}<a href="{% url "task_detail" item.id %}">{{ item.title }}</a> (<a href="{% url "task_edit" item.id %}">edit</a>
+    <a href="{% url "task_delete" item.id %}">delete</a>)</li>
+    {% endfor %}
+</ul>
+
+<p><a href="{% url "task_new" %}">new</a></p>
+{% endblock %}

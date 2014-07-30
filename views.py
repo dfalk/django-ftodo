@@ -53,6 +53,11 @@ def task_list(request, template_name='ftodo/task_list.html'):
     return render(request, template_name, {'object_list':tasks})
 
 @login_required
+def project_list(request, template_name='ftodo/project_list.html'):
+    projects = Task.objects.filter(user=request.user).filter(project=True)
+    return render(request, template_name, {'object_list':projects})
+
+@login_required
 def task_detail(request, pk, template_name='ftodo/task_detail.html'):
     task = None
     task_result = get_object_or_404(Task, pk=pk)

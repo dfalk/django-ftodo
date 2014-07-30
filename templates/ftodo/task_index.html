@@ -10,7 +10,7 @@
 
 {% if user.is_authenticated %}
     <h2>Задачи</h2>
-    <p><a href="{% url "task_new" %}">new</a></p>
+    <p><a href="{% url "task_new" %}">new task</a></p>
     {% if old_list %}<p><b>Просроченные</b></p>
     <ul>{% for item in old_list %}
         <li>{{ item.date_due|date:"Y-m-d" }} <a href="{% url "task_detail" item.id %}">{{ item.title }}</a>  (<a href="{% url "task_edit" item.id %}">edit</a>
@@ -28,6 +28,7 @@
         {% endfor %}
         </ul>
     {% endfor %}
+    <p><a href="{% url "task_list" %}">all</a></p>
 
     <h2>Закладки</h2>
     <ul>
@@ -38,6 +39,7 @@
         </li>
         {% endfor %}
     </ul>
+    <p><a href="{% url "project_list" %}">projects</a></p>
 
     <h2>Теги</h2>
     <ul>
@@ -48,6 +50,7 @@
         </li>
         {% endfor %}
     </ul>
+    <p><a href="{% url "tasktag_new" %}">new tag</a></p>
 {% else %}Welcome! Please, <a href="/accounts/login/">login</a>!{% endif %}
 
 {% endblock %}
