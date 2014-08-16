@@ -28,6 +28,7 @@ class Task(models.Model):
     date_due = models.DateTimeField(blank=True, null=True)
     has_due = models.BooleanField(default=False)
     completed = models.BooleanField(default=False)
+    goal = models.BooleanField(default=False)
     project = models.BooleanField(default=False)
     repeat = models.BooleanField(default=False)
     bookmark = models.BooleanField(default=False)

@@ -3,7 +3,7 @@
 {% block meta_title %}{{ object.title }}{% endblock %}
 
 {% block breadcrumb %}
-{{ block.super }}{% if object.project %}<li><a href="{% url 'project_list' %}">Проекты</a></li>{% endif %} <li>{{ object.title }}</li>
+{{ block.super }}{% if object.goal %}<li><a href="{% url 'goal_list' %}">Цели</a></li>{% endif %}{% if object.project %}<li><a href="{% url 'project_list' %}">Проекты</a></li>{% endif %} <li>{{ object.title }}</li>
 {% endblock %}
 
 {% block title %}{{ object.title }}{% endblock %}

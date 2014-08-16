@@ -53,6 +53,11 @@ def task_list(request, template_name='ftodo/task_list.html'):
     return render(request, template_name, {'object_list':tasks})
 
 @login_required
+def goal_list(request, template_name='ftodo/goal_list.html'):
+    goals = Task.objects.filter(user=request.user).filter(goal=True)
+    return render(request, template_name, {'object_list':goals})
+
+@login_required
 def project_list(request, template_name='ftodo/project_list.html'):
     projects = Task.objects.filter(user=request.user).filter(project=True)
     return render(request, template_name, {'object_list':projects})
