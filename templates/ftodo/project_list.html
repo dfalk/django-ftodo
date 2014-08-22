@@ -9,11 +9,20 @@
 {% block title %}Проекты{% endblock %}
 
 {% block content %}
+{% regroup object_list by parent as project_list %}
 <ul>
-    {% for item in object_list %}
-    <li>{{ item.date_due|date:"Y-m-d" }} {% if item.completed %}+ {% endif %}<a href="{% url "task_detail" item.id %}">{{ item.title }}</a> (<a href="{% url "task_edit" item.id %}">edit</a>
+{% for project in project_list %}
+    <li>{% with grp=project.grouper %}{{ grp.date_due|date:"Y-m-d" }} {% if grp.completed %}+ {% endif %}<a href="{% url "task_detail" grp.id %}">{{ grp.title }}</a> (<a href="{% url "task_edit" grp.id %}">edit</a>
+    <a href="{% url "task_delete" grp.id %}">delete</a>)</li>
+    {% endwith %}
+    <ul>
+        {% for item in project.list %}
+             <li>{{ item.date_due|date:"Y-m-d" }} {% if item.completed %}+ {% endif %}<a href="{% url "task_detail" item.id %}">{{ item.title }}</a> (<a href="{% url "task_edit" item.id %}">edit</a>
     <a href="{% url "task_delete" item.id %}">delete</a>)</li>
-    {% endfor %}
+        {% endfor %}
+    </ul>
+    </li>
+{% endfor %}
 </ul>
 
 <p><a href="{% url "task_new" %}">new</a></p>

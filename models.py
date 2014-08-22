@@ -30,6 +30,7 @@ class Task(models.Model):
     completed = models.BooleanField(default=False)
     goal = models.BooleanField(default=False)
     project = models.BooleanField(default=False)
+    progroup = models.BooleanField(default=False)
     repeat = models.BooleanField(default=False)
     bookmark = models.BooleanField(default=False)
     tags = models.ManyToManyField(TaskTag, blank=True, null=True)
