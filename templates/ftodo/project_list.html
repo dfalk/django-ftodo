@@ -12,8 +12,8 @@
 {% regroup object_list by parent as project_list %}
 <ul>
 {% for project in project_list %}
-    <li>{% with grp=project.grouper %}{{ grp.date_due|date:"Y-m-d" }} {% if grp.completed %}+ {% endif %}<a href="{% url "task_detail" grp.id %}">{{ grp.title }}</a> (<a href="{% url "task_edit" grp.id %}">edit</a>
-    <a href="{% url "task_delete" grp.id %}">delete</a>)</li>
+    <li>{% with grp=project.grouper %}{% if grp.id %}{{ grp.date_due|date:"Y-m-d" }} {% if grp.completed %}+ {% endif %}<a href="{% url "task_detail" grp.id %}">{{ grp.title }}</a> (<a href="{% url "task_edit" grp.id %}">edit</a>
+    <a href="{% url "task_delete" grp.id %}">delete</a>){% else %}no{% endif %}</li>
     {% endwith %}
     <ul>
         {% for item in project.list %}
